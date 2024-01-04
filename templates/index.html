@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Search Soal Ujian</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .upper-body {
+            background-color: #8e44ad;
+            height: 15vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .lower-body {
+            background-color: #fbd4de;
+            height: 75vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        .search-card {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(254, 234, 234);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 1000px;
+            z-index: 2; /* Ensure the search form is above the table */
+        }
+
+        .search-card h2 {
+            margin-bottom: 10px;
+            color: #8e44ad;
+        }
+
+        .search-form {
+    display: 100px;
+    flex-direction: row; /* Change from column to row */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    text-align: center;
+}
+
+.search-form label {
+    margin-right: 10px; /* Add margin to separate label and input field */
+}
+
+.search-form input {
+    padding: 10px;
+    margin-bottom: 1px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 500px;
+}
+
+.search-form button {
+    background-color: #000000;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+        .table-card {
+            position: absolute;
+            top: 60%; /* Adjusted to start from the middle */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            overflow: auto; /* Make the table card scrollable */
+            max-height: 60vh; /* Set a maximum height for the scrollable area */
+            z-index: 1; /* Ensure the table is below the search form */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        p {
+            position: relative;
+            padding-top: 300px;
+            padding-left: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="upper-body">
+        <h1>Data Search!</h1>
+    </div>
+    <div class="lower-body">
+        <div class="search-card">
+            <form class="search-form" method="post" action="{{ url_for('index') }}">
+                <label for="searchInput">Keyword:</label>
+                <input type="text" name="keyword" id="keyword" value="{{ keyword }}">
+                <button type="submit">Search</button>
+            </form>
+            {% if data %}
+            <h3>Search Result for "{{ keyword }}"</h3>
+        </div>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Soal</th>
+                        <th>Jawaban</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+        </div>
+        <p>No results found for "{{ keyword }}".</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
